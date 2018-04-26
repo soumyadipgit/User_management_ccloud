@@ -1,0 +1,27 @@
+---
+-
+  hosts: all
+  name: "resource copy"
+  ignore_errors: True
+  tasks:
+    -
+      copy:
+        dest: /tmp/
+        src: "/home/ccloud/git_files/{{ item }}"
+        mode: 0777
+      with_items:
+        - key.sh
+        - key.csv
+        - pub_keys
+        - sudoers.sh
+
+-
+  hosts: all
+  name: "script execution"
+  tasks:
+    -
+      shell: "/tmp/{{ item }}"
+      with_items:
+        - key.sh
+        - sudoers.sh
+
